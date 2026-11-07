@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHODA AI</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #101827;
+  color: white;
+}
+header {
+  background: #172b46;
+  padding: 22px;
+  text-align: center;
+}
+header h1 { color: #55d6be; margin: 0; }
+header p { color: #d2dbea; }
+main {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 15px;
+}
+#messages {
+  height: 55vh;
+  min-height: 300px;
+  overflow-y: auto;
+  background: #1c293b;
+  padding: 15px;
+  border-radius: 12px;
+}
+.message {
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  line-height: 1.5;
+}
+.bot { background: #293c53; }
+.user { background: #176c64; text-align: right; }
+form { display: flex; gap: 8px; margin-top: 15px; }
+input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px;
+  border-radius: 9px;
+  border: 0;
+  font-size: 16px;
+}
+button {
+  padding: 13px;
+  border: 0;
+  border-radius: 9px;
+  background: #55d6be;
+  font-weight: bold;
+}
+footer { text-align: center; color: #aebccc; font-size: 12px; padding: 20px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>RHODA AI</h1>
+  <p>Votre assistante intelligente de GROUPE RHODAMISSILE89</p>
+</header>
+<main>
+  <div id="messages">
+    <div class="message bot">
+      Bonjour ! Je suis RHODA AI. Bienvenue ! Comment puis-je vous aider aujourd'hui ?
+    </div>
+  </div>
+  <form id="chat">
+    <input id="question" placeholder="Écrivez votre message..." required>
+    <button type="submit">Envoyer</button>
+  </form>
+</main>
+<footer>
+  RHODA AI · GROUPE RHODAMISSILE89
+</footer>
+<script>
+const form = document.getElementById("chat");
+const input = document.getElementById("question");
+const messages = document.getElementById("messages");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const question = input.value.trim();
+  if (!question) return;
+
+  const user = document.createElement("div");
+  user.className = "message user";
+  user.textContent = question;
+  messages.appendChild(user);
+  input.value = "";
+
+  const bot = document.createElement("div");
+  bot.className = "message bot";
+  bot.textContent = "Merci pour votre message ! La connexion à l'intelligence artificielle sera ajoutée à la prochaine étape.";
+  messages.appendChild(bot);
+  messages.scrollTop = messages.scrollHeight;
+});
+</script>
+</body>
+</html>
