@@ -83,8 +83,9 @@ const form = document.getElementById("chat");
 const input = document.getElementById("question");
 const messages = document.getElementById("messages");
 
-form.addEventListener("submit", function(e) {
+form.addEventListener("submit", async function(e) {
   e.preventDefault();
+
   const question = input.value.trim();
   if (!question) return;
 
@@ -96,9 +97,24 @@ form.addEventListener("submit", function(e) {
 
   const bot = document.createElement("div");
   bot.className = "message bot";
-  bot.textContent = "Merci pour votre message ! La connexion à l'intelligence artificielle sera ajoutée à la prochaine étape.";
+  bot.textContent = "RHODA AI réfléchit...";
   messages.appendChild(bot);
-  messages.scrollTop = messages.scrollHeight;
+
+  try {
+    const response = await fetch(
+      "https://rhoda-ai-api.rhodamissile.workers.dev/",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: question })
+      }
+    );
+
+    const result = await response.json();
+    bot.textContent = result.reply || result.error || "Aucune réponse reçue.";
+  } catch (error) {
+    bot.textContent = "Connexion impossible avec RHODA AI.";
+  }
 });
 </script>
 </body>
