@@ -82,13 +82,13 @@ footer { text-align: center; color: #aebccc; font-size: 12px; padding: 20px; }
 </footer>
 <script>
 const form = document.getElementById("chat");
+  let derniereReponse = "";
 const input = document.getElementById("question");
 const messages = document.getElementById("messages");
 
 const micro = document.getElementById("micro");
 const ecouter = document.getElementById("ecouter");
 
-let derniereReponse = "";
 
 micro.addEventListener("click", () => {
   const Reconnaissance =
