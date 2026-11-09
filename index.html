@@ -132,7 +132,7 @@ const voixFrancaise = voixDisponibles.find(v =>
   v.lang.toLowerCase().startsWith("fr")
 );
 
-voix.voice = voixMasculine || voixFrancaise || null;
+voix.voice = voixMasculine || null;
 voix.rate = 0.92;
 voix.pitch = 0.85;
 
