@@ -121,22 +121,21 @@ speechSynthesis.cancel();
 const voix = new SpeechSynthesisUtterance(derniereReponse);
 voix.lang = "fr-FR";
 
+
 const voixDisponibles = speechSynthesis.getVoices();
 
 const voixMasculine = voixDisponibles.find(v =>
-  /Henri|Paul|Thomas|homme|male/i.test(v.name)
-  && v.lang.toLowerCase().startsWith("fr")
-);
-
-const voixFrancaise = voixDisponibles.find(v =>
+  /Henri|Paul|Thomas|homme|male/i.test(v.name) &&
   v.lang.toLowerCase().startsWith("fr")
 );
 
 voix.voice = voixMasculine || null;
+voix.lang = "fr-FR";
 voix.rate = 0.92;
 voix.pitch = 0.85;
 
 speechSynthesis.speak(voix);
+
 
 
 
