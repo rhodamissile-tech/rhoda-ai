@@ -171,6 +171,7 @@ form.addEventListener("submit", async function(e) {
 
     const result = await response.json();
     derniereReponse = result.reply || result.error || "Aucune réponse reçue.";
+    derniereReponse = derniereReponse.replace(/\*/g, "");
 bot.textContent = derniereReponse;
   } catch (error) {
     bot.textContent = "Connexion impossible avec RHODA AI.";
