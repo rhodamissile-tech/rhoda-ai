@@ -72,6 +72,8 @@ footer { text-align: center; color: #aebccc; font-size: 12px; padding: 20px; }
   </div>
   <form id="chat">
     <input id="question" placeholder="Écrivez votre message..." required>
+    <button type="button" id="micro">🎤 Parler</button>
+<button type="button" id="ecouter">🔊 Écouter</button>
     <button type="submit">Envoyer</button>
   </form>
 </main>
@@ -82,6 +84,43 @@ footer { text-align: center; color: #aebccc; font-size: 12px; padding: 20px; }
 const form = document.getElementById("chat");
 const input = document.getElementById("question");
 const messages = document.getElementById("messages");
+
+const micro = document.getElementById("micro");
+const ecouter = document.getElementById("ecouter");
+
+let derniereReponse = "";
+
+micro.addEventListener("click", () => {
+  const Reconnaissance =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!Reconnaissance) {
+    alert("La reconnaissance vocale n'est pas disponible dans ce navigateur.");
+    return;
+  }
+
+  const reconnaissance = new Reconnaissance();
+  reconnaissance.lang = "fr-FR";
+  reconnaissance.start();
+
+  reconnaissance.onresult = (event) => {
+    input.value = event.results[0][0].transcript;
+    form.requestSubmit();
+  };
+});
+
+ecouter.addEventListener("click", () => {
+  if (!derniereReponse) {
+    alert("RHODA AI n'a pas encore répondu.");
+    return;
+  }
+
+  speechSynthesis.cancel();
+  const voix = new SpeechSynthesisUtterance(derniereReponse);
+  voix.lang = "fr-FR";
+  voix.rate = 1;
+  speechSynthesis.speak(voix);
+});
 
 form.addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -111,7 +150,8 @@ form.addEventListener("submit", async function(e) {
     );
 
     const result = await response.json();
-    bot.textContent = result.reply || result.error || "Aucune réponse reçue.";
+    derniereReponse = result.reply || result.error || "Aucune réponse reçue.";
+bot.textContent = derniereReponse;
   } catch (error) {
     bot.textContent = "Connexion impossible avec RHODA AI.";
   }
